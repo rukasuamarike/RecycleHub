@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:recyclehub/screens/recycler_login_screen.dart';
 import 'package:recyclehub/screens/user_signup_screen.dart';
 
 import '../widgets/userdata.dart';
@@ -32,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
             //button to login as a recycling center
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RecyclerLogin())),
                 child: const Text("Login as a Recycling Center")),
             const SizedBox(height: 48),
 

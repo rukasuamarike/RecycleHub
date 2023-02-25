@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
           SizedBox(height: MediaQuery.of(context).size.width / 16),
           //need to get the user's name from firebase
           Text(userData!.name,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
           SizedBox(height: MediaQuery.of(context).size.width / 32),
           InkWell(
             child: const Text("My Recycling Center"),
@@ -37,7 +38,7 @@ class _HomeState extends State<Home> {
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
           //need to get the nubmer of cans from firebase
-          Text(userData!.totalCans.toString()),
+          Text(userData.totalCans.toString()),
 
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 

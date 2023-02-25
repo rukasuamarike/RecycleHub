@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:recyclehub/screens/home.dart';
 import 'package:recyclehub/screens/user_signup_screen.dart';
 import 'package:recyclehub/widgets/text_field_input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,10 +38,12 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+        body: Center(
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width > 500
+                    ? 500
+                    : double.infinity,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

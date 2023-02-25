@@ -50,10 +50,12 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+        body: Center(
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width > 500
+                    ? 500
+                    : double.infinity,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
