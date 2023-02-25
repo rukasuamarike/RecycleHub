@@ -47,7 +47,7 @@ class _TurnCansState extends State<TurnCans> {
                       //text field for email
                       TextFieldInput(
                           textEditingController: _emailController,
-                          hintText: 'Enter your email',
+                          hintText: "Enter user's email",
                           textInputType: TextInputType.emailAddress),
                       //add space between the text fields
                       const SizedBox(height: 24),
