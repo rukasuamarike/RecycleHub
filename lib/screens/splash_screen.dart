@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
         providers: [
           StreamProvider.value(
               value: db
-                  .doc(user!.uid)
+                  .doc(user.uid)
                   .snapshots()
                   .map((snap) => UserData.fromFirestore(snap)),
               initialData: UserData(
