@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:recyclehub/screens/UserSignUpScreen.dart';
+import 'package:recyclehub/screens/user_signup_screen.dart';
 import 'package:recyclehub/widgets/text_field_input.dart';
 
 class UserLoginScreen extends StatefulWidget {
