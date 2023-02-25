@@ -36,6 +36,12 @@ class _TurnCansState extends State<TurnCans> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(height: MediaQuery.of(context).size.width / 16),
+                      const Text("Adding Trash Cans",
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold)),
+                      SizedBox(height: MediaQuery.of(context).size.width / 32),
+
                       Flexible(child: Container(), flex: 2),
                       const SizedBox(height: 64),
                       //text field for email
