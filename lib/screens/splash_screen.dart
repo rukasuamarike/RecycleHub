@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:recyclehub/screens/recycler_login_screen.dart';
+import 'package:recyclehub/screens/user_login_screen.dart';
 import 'package:recyclehub/screens/user_signup_screen.dart';
 
 import '../widgets/userdata.dart';
@@ -39,10 +40,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 48),
 
             ElevatedButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UserSignUpScreen())),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => UserLoginScreen())),
                 child: const Text("Sign Up or Login as a User"))
           ],
         ),
