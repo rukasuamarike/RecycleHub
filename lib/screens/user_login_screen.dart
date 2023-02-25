@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:recyclehub/screens/user_signup_screen.dart';
 import 'package:recyclehub/widgets/text_field_input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:recyclehub/widgets/userdata.dart';
 
 class UserLoginScreen extends StatefulWidget {
   const UserLoginScreen({super.key});
@@ -15,16 +19,18 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
+  // @override
+  // void dispose() {
 
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-  }
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
+  // }
 
-  void loginUser() {
+  void loginUser() async {
     if (_emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
-      //login user on firebase
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
     }
   }
 

@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:recyclehub/screens/user_login_screen.dart';
 
 import '../widgets/text_field_input.dart';
+import '../widgets/userdata.dart';
 
 class UserSignUpScreen extends StatefulWidget {
   const UserSignUpScreen({super.key});
@@ -17,18 +20,30 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   bool _isLoading = false;
+  // @override
+  // void dispose() {
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
+  //   _nameController.dispose();
+  // }
 
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _nameController.dispose();
-  }
-
-  void signUpUser() {
+  void signUpUser() async {
     if (_nameController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
-      //sign up user on firebase
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text)
+          .then((cred) async => await FirebaseFirestore.instance
+              .collection("Users")
+              .doc(cred.user!.uid)
+              .set(UserData(
+                      uid: cred.user!.uid,
+                      name: _nameController.text,
+                      totalCans: 0,
+                      defaultCenter: "",
+                      defaultZip: 95053)
+                  .toJson()));
     }
   }
 
