@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recyclehub/screens/turn_cans.dart';
 
@@ -22,17 +23,29 @@ class _TurnCansState extends State<TurnCans> {
 
   void saveCan() {
     if (_turnCanin.text.isNotEmpty && _emailController.text.isNotEmpty) {
-      //save it to the firebase database.
+      // FirebaseAuth.instance
+      //     .then((cred) async => await FirebaseFirestore.instance
+      //         .collection("Users")
+      //         .doc(cred.user!.uid)
+      //         .set(UserData(
+      //                 uid: cred.user!.uid,
+      //                 name: _nameController.text,
+      //                 totalCans: 0,
+      //                 defaultCenter: "",
+      //                 defaultZip: 95053)
+      //             .toJson()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+        body: Center(
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width > 500
+                    ? 500
+                    : double.infinity,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
