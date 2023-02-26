@@ -75,21 +75,37 @@ class _ProfileState extends State<Profile> {
               style:
                   const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
           SizedBox(height: MediaQuery.of(context).size.width / 32),
-          InkWell(
-            child: const Text("My Recycling Center"),
-            //on tap launch a google maps link
-            onTap: () async {
-              mapuri();
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("My Default Recycling Center: "),
+              TextButton(
+                onPressed: () async {
+                  String query = Uri.encodeComponent(userData.defaultCenter);
+                  html.window.open(
+                      'https://www.google.com/maps/search/?api=1&query=${query}',
+                      "bob");
+                },
+                child: Text(userData.defaultCenter.isEmpty
+                    ? "Not set yet"
+                    : userData.defaultCenter),
+              ),
+            ],
           ),
+
+          TextButton(
+            onPressed: () => mapuri(),
+            child: Text(userData.defaultCenter.isEmpty ? "Set" : "Update"),
+          ),
+
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
           //need to get the nubmer of cans from firebase
-          Text(userData.totalCans.toString()),
+          Text('Total Cans: ${userData.totalCans.toString()}'),
 
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
-          Text(user!.providerData[0].email as String)
+          Text('Email: ${user!.providerData[0].email.toString()}')
         ],
       ),
     );
