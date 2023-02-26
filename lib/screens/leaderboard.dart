@@ -19,29 +19,89 @@ class _LeaderboardState extends State<Leaderboard> {
     List<UserData> Leaders = Provider.of<List<UserData>>(context);
     print(Leaders);
     List<Widget> widgetlist = [];
-    widgetlist.add(const Text(
-      "Leaderboard",
-      style: TextStyle(fontSize: 30),
-    ));
-    widgetlist.insertAll(
-        1,
-        Leaders.map((usr) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(children: [
-                Text(usr.name),
-                const Spacer(),
-                Text(usr.totalCans.toString())
-              ]),
-            )));
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [SafeArea(child: Column(children: widgetlist))],
-          ),
-        ),
+    widgetlist.add(Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          "Leaderboard",
+          style: TextStyle(fontSize: 30),
+        )));
+    widgetlist.add(
+      SizedBox(
+        height: MediaQuery.of(context).size.height / 8,
       ),
     );
+    widgetlist.add(const Text(
+      "Here is a leaderboard of the top RecycleHub users.",
+      style: TextStyle(fontSize: 20),
+    ));
+    widgetlist.add(
+      SizedBox(
+        height: 40,
+      ),
+    );
+    widgetlist.add(const Text(
+      "Have fun competing to help our planet!",
+      style: TextStyle(fontSize: 20),
+    ));
+    widgetlist.add(
+      SizedBox(
+        height: MediaQuery.of(context).size.height / 8,
+      ),
+    );
+
+    widgetlist.add(const Text(
+      "Top 50 Users",
+      style: TextStyle(fontSize: 20),
+    ));
+    widgetlist.add(
+      SizedBox(
+        height: 20,
+      ),
+    );
+    widgetlist.add(Divider());
+    Leaders.forEach((usr) {
+      widgetlist.add(Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 4,
+            ),
+            Text(usr.name),
+            Spacer(),
+            Text('${usr.totalCans.toString()} cans'),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 4,
+            ),
+          ])));
+
+      widgetlist.add(Divider());
+    });
+    // widgetlist.insertAll(
+    //     1,
+    //     Leaders.map((usr) => Padding(
+    //         padding: const EdgeInsets.all(8.0),
+    //         child: Container(
+    //           margin: const EdgeInsets.all(15.0),
+    //           padding: const EdgeInsets.all(3.0),
+    //           decoration:
+    //               BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+    //           child: Row(children: [
+    //             const Spacer(),
+    //             Text(usr.name),
+    //             const Spacer(),
+    //             Text(usr.totalCans.toString()),
+    //             const Spacer(),
+    //           ]),
+    //         ))));
+    return Scaffold(
+        body: SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints:
+            BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: widgetlist),
+      ),
+    ));
   }
 }
