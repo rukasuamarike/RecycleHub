@@ -202,7 +202,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
 
                             //sign up button
                             InkWell(
-                              onTap: () async =>
+                              onTap: () =>
                                   {signUpUser(), Navigator.of(context).pop()},
                               child: Container(
                                   width: double.infinity,
