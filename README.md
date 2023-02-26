@@ -21,6 +21,6 @@ Some of the things we were able to learn throughout the project were the,
 -utilizing skills/technologies that we've had previously used, to perform and create this project. 
 -creativeness within the leaderboard and account creation.  
 
-## **What's next?**🔮
+## **What's next**🔮
 
 We believe that **ReHub* can be scaled to a bigger scale and be incorporated within many Recycling centers while acting as a quick and reliable resource for anyone to recycle more. Some additional features such as the ability to provide the user the most optimal distance to the nearest distance as well as ...Also, identifying and receiving data on recycling centers outside of SCU to provide accurate google maps info for users.  
