@@ -117,7 +117,15 @@ class _ProfileState extends State<Profile> {
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
           Text('Email: ${user!.providerData[0].email.toString()}',
-              style: const TextStyle(fontSize: 18))
+              style: const TextStyle(fontSize: 18)),
+          Spacer(),
+          ElevatedButton(
+            onPressed: () async => await FirebaseAuth.instance.signOut(),
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)),
+            child: Text("Sign Out", style: const TextStyle(fontSize: 18)),
+          ),
+          Spacer()
         ],
       ),
     );

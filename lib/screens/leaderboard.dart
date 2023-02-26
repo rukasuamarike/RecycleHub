@@ -17,6 +17,7 @@ class _LeaderboardState extends State<Leaderboard> {
   @override
   Widget build(BuildContext context) {
     List<UserData> Leaders = Provider.of<List<UserData>>(context);
+    print(Leaders);
     List<Widget> widgetlist = [];
     widgetlist.add(const Text(
       "Leaderboard",
