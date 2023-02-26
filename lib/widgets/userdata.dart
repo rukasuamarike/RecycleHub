@@ -6,6 +6,7 @@ class UserData {
   num totalCans;
   String defaultCenter;
   num defaultZip;
+  String email;
 
   UserData({
     required this.uid,
@@ -13,6 +14,7 @@ class UserData {
     required this.totalCans,
     required this.defaultCenter,
     required this.defaultZip,
+    required this.email,
   });
   static UserData fromFirestore(DocumentSnapshot snap) {
     Map<String, dynamic> data = snap.data() as Map<String, dynamic>;
@@ -21,7 +23,8 @@ class UserData {
         name: data['name'],
         totalCans: data['totalCans'],
         defaultCenter: data['defaultCenter'],
-        defaultZip: data['defaultZip']);
+        defaultZip: data['defaultZip'],
+        email: data['email']);
     return user;
   }
 
@@ -31,7 +34,8 @@ class UserData {
       "name": name,
       "totalCans": totalCans,
       "defaultCenter": defaultCenter,
-      "defaultZip": defaultZip
+      "defaultZip": defaultZip,
+      "email": email
     };
   }
 }

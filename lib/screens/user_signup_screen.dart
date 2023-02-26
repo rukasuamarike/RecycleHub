@@ -42,7 +42,8 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                       name: _nameController.text,
                       totalCans: 0,
                       defaultCenter: "",
-                      defaultZip: 95053)
+                      defaultZip: 0,
+                      email: _emailController.text)
                   .toJson()));
     }
   }

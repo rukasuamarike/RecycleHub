@@ -59,7 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
               name: "",
               totalCans: 0,
               defaultCenter: "",
-              defaultZip: 0)),
+              defaultZip: 0,
+              email: "")),
       StreamProvider.value(
           value: FirebaseFirestore.instance
               .collection("Users")
@@ -70,11 +71,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   snap.docs.map((doc) => UserData.fromFirestore(doc)).toList()),
           initialData: [
             UserData(
-                uid: "uid",
-                name: "name",
+                uid: "",
+                name: "",
                 totalCans: 0,
-                defaultCenter: "defaultCenter",
-                defaultZip: 0)
+                defaultCenter: "",
+                defaultZip: 0,
+                email: "")
           ])
     ], child: Home());
   }

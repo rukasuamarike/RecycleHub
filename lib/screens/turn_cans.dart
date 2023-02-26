@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recyclehub/screens/turn_cans.dart';
 
 import '../widgets/text_field_input.dart';
+import '../widgets/userdata.dart';
 
 class TurnCans extends StatefulWidget {
   const TurnCans({super.key});
@@ -16,25 +18,28 @@ class _TurnCansState extends State<TurnCans> {
   final TextEditingController _emailController = TextEditingController();
   bool _isLoading = false;
 
-  void dispose() {
-    _turnCanin.dispose();
-    _emailController.dispose();
-  }
-
-  void saveCan() {
+  void saveCan() async {
+    num cans = 0;
+    late UserData receiver;
     if (_turnCanin.text.isNotEmpty && _emailController.text.isNotEmpty) {
-      // FirebaseAuth.instance
-      //     .then((cred) async => await FirebaseFirestore.instance
-      //         .collection("Users")
-      //         .doc(cred.user!.uid)
-      //         .set(UserData(
-      //                 uid: cred.user!.uid,
-      //                 name: _nameController.text,
-      //                 totalCans: 0,
-      //                 defaultCenter: "",
-      //                 defaultZip: 95053)
-      //             .toJson()));
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .where("email", isEqualTo: _emailController.text)
+          .get()
+          .then((snap) => {
+                receiver = UserData.fromFirestore(snap.docs[0]),
+                cans = receiver.totalCans
+              });
+      DocumentReference<Map<String, dynamic>> ref =
+          FirebaseFirestore.instance.collection("Users").doc(receiver.uid);
+      await ref
+          .get()
+          .then((snap) => cans = UserData.fromFirestore(snap).totalCans);
+      cans += int.parse(_turnCanin.value.text);
+      await ref.update({"totalCans": cans});
     }
+    print(
+        'confirmed gave ${receiver.name} ${_turnCanin.text} cans! total: ${cans}');
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:recyclehub/screens/home.dart';
 import 'dart:html' as html;
 import '../widgets/crv.dart';
 import '../widgets/userdata.dart';
@@ -39,9 +40,29 @@ class _ProfileState extends State<Profile> {
             .where("PostalCode", whereIn: ziprange)
             .get()
             .then((snap) => snap.docs.map((e) => CRV.fromFirestore(e)).toList())
-            .then((crvs) => showDialog(
+            .then((crvs) {
+          // ScaffoldMessenger.of(context)
+          //     .showSnackBar(CustomSnack("no nearby recycle centers"));
+          showDialog(
+              context: context,
+              builder: (context) => _CRVDialog(context, crvs, userData));
+          if (crvs.isEmpty) {
+            showDialog(
                 context: context,
-                builder: (context) => _CRVDialog(context, crvs, userData)));
+                builder: (context) => AlertDialog(
+                      content: Center(
+                        child: Text("no nearby recycle centers"),
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Cancel"))
+                      ],
+                    ));
+          }
+        });
       }
     }
 
@@ -122,24 +143,66 @@ Widget _SetZipDialog(BuildContext context, UserData uData) {
   );
 }
 
+SnackBar CustomSnack(String message) {
+  return SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: 'CRV locations',
+        onPressed: () {
+          html.window.open(
+              "https://www2.calrecycle.ca.gov/BevContainer/RecyclingCenters/",
+              "recycle");
+        },
+      ));
+}
+
 Widget _CRVDialog(BuildContext context, List<CRV> datas, UserData usr) {
   print(datas);
-  return AlertDialog(
-      title: Text("Select Recycle Center"),
-      actions: [
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("Cancel")),
-      ],
-      content: Center(
-          child: Container(
-        margin: const EdgeInsets.all(8.0),
-        child: Column(
-          children: datas.map((e) => CustomTile(context, e, usr.uid)).toList(),
-        ),
-      )));
+  bool hidden = true;
+  TextEditingController _zipcontrol = TextEditingController();
+
+  return StatefulBuilder(builder: (context, setState) {
+    return AlertDialog(
+        title: Text("Select Recycle Center"),
+        actions: [
+          TextButton(
+              onPressed: () => setState(() {
+                    hidden = false;
+                  }),
+              child: const Text("Update Zipcode")),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel")),
+        ],
+        content: Center(
+            child: Container(
+          margin: const EdgeInsets.all(8.0),
+          child: Column(
+              children: hidden
+                  ? datas.map((e) => CustomTile(context, e, usr.uid)).toList()
+                  : [
+                      TextField(controller: _zipcontrol),
+                      TextButton(
+                        onPressed: () async {
+                          num temp = 0;
+                          if (_zipcontrol.text.isNotEmpty &&
+                              _zipcontrol.text.length < 6) {
+                            temp = int.parse(_zipcontrol.text);
+                          }
+                          //update userzip
+                          await FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(usr.uid)
+                              .update({"defaultZip": temp}).then(
+                                  (k) => Navigator.of(context).pop());
+                        },
+                        child: Text("Set"),
+                      )
+                    ]),
+        )));
+  });
 }
 
 Widget CustomTile(BuildContext context, CRV c, String uid) {
