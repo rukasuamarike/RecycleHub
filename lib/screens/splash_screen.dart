@@ -73,7 +73,8 @@ class _SplashScreenState extends State<SplashScreen> {
               totalCans: 0,
               defaultCenter: "",
               defaultZip: 0,
-              email: "")),
+              email: "",
+              crvauth: false)),
       StreamProvider.value(
           value: FirebaseFirestore.instance
               .collection("Users")
@@ -89,7 +90,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 totalCans: 0,
                 defaultCenter: "",
                 defaultZip: 0,
-                email: "")
+                email: "",
+                crvauth: false)
           ])
     ], child: Home());
   }

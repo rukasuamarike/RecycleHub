@@ -7,7 +7,7 @@ class UserData {
   String defaultCenter;
   num defaultZip;
   String email;
-
+  bool crvauth;
   UserData({
     required this.uid,
     required this.name,
@@ -15,6 +15,7 @@ class UserData {
     required this.defaultCenter,
     required this.defaultZip,
     required this.email,
+    required this.crvauth,
   });
   static UserData fromFirestore(DocumentSnapshot snap) {
     Map<String, dynamic> data = snap.data() as Map<String, dynamic>;
@@ -24,7 +25,8 @@ class UserData {
         totalCans: data['totalCans'],
         defaultCenter: data['defaultCenter'],
         defaultZip: data['defaultZip'],
-        email: data['email']);
+        email: data['email'],
+        crvauth: data['crvauth']);
     return user;
   }
 
@@ -35,7 +37,8 @@ class UserData {
       "totalCans": totalCans,
       "defaultCenter": defaultCenter,
       "defaultZip": defaultZip,
-      "email": email
+      "email": email,
+      "crvauth": crvauth,
     };
   }
 }
