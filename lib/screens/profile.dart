@@ -76,8 +76,11 @@ class _ProfileState extends State<Profile> {
                   const TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
           SizedBox(height: MediaQuery.of(context).size.width / 32),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+              ),
               const Text("My Default Recycling Center: ",
                   style: TextStyle(fontSize: 18)),
               TextButton(
@@ -97,33 +100,67 @@ class _ProfileState extends State<Profile> {
           ),
           SizedBox(height: MediaQuery.of(context).size.width / 64),
 
-          ElevatedButton(
-            onPressed: () => mapuri(),
-            style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)),
-            child: Text(
-                userData.defaultCenter.isEmpty
-                    ? "Set Default Recycling Center"
-                    : "Update Default Recycling Center",
-                style: const TextStyle(fontSize: 18)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+              ),
+              ElevatedButton(
+                onPressed: () => mapuri(),
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.green)),
+                child: Text(
+                    userData.defaultCenter.isEmpty
+                        ? "Set Default Recycling Center"
+                        : "Update Default Recycling Center",
+                    style: const TextStyle(fontSize: 18)),
+              ),
+            ],
           ),
 
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
           //need to get the nubmer of cans from firebase
-          Text('Total Cans Recycled: ${userData.totalCans.toString()}',
-              style: const TextStyle(fontSize: 18)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+              ),
+              Text('Total Cans Recycled: ${userData.totalCans.toString()}',
+                  style: const TextStyle(fontSize: 18)),
+            ],
+          ),
 
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
-          Text('Email: ${user!.providerData[0].email.toString()}',
-              style: const TextStyle(fontSize: 18)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+              ),
+              Text('Email: ${user!.providerData[0].email.toString()}',
+                  style: const TextStyle(fontSize: 18)),
+            ],
+          ),
           Spacer(),
-          ElevatedButton(
-            onPressed: () async => await FirebaseAuth.instance.signOut(),
-            style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)),
-            child: Text("Sign Out", style: const TextStyle(fontSize: 18)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+              ),
+              ElevatedButton(
+                onPressed: () async => await FirebaseAuth.instance.signOut(),
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.green)),
+                child: Text("Sign Out", style: const TextStyle(fontSize: 18)),
+              ),
+            ],
           ),
           Spacer()
         ],
@@ -136,6 +173,7 @@ Widget _SetZipDialog(BuildContext context, UserData uData) {
   final zipController =
       TextEditingController(text: uData.defaultZip.toString());
   return AlertDialog(
+    insetPadding: EdgeInsets.all(10),
     title: Text("Set zipcode"),
     content: SafeArea(
       child: Column(
@@ -199,6 +237,7 @@ Widget _CRVDialog(BuildContext context, List<CRV> datas, UserData usr) {
 
   return StatefulBuilder(builder: (context, setState) {
     return AlertDialog(
+        insetPadding: EdgeInsets.all(10),
         title: Text("Select Recycle Center"),
         actions: [
           ElevatedButton(
@@ -212,32 +251,44 @@ Widget _CRVDialog(BuildContext context, List<CRV> datas, UserData usr) {
               },
               child: const Text("Cancel")),
         ],
-        content: Center(
-            child: Container(
-          margin: const EdgeInsets.all(8.0),
-          child: Column(
-              children: hidden
-                  ? datas.map((e) => CustomTile(context, e, usr.uid)).toList()
-                  : [
-                      TextField(controller: _zipcontrol),
-                      TextButton(
-                        onPressed: () async {
-                          num temp = 0;
-                          if (_zipcontrol.text.isNotEmpty &&
-                              _zipcontrol.text.length < 6) {
-                            temp = int.parse(_zipcontrol.text);
-                          }
-                          //update userzip
-                          await FirebaseFirestore.instance
-                              .collection("Users")
-                              .doc(usr.uid)
-                              .update({"defaultZip": temp}).then(
-                                  (k) => Navigator.of(context).pop());
-                        },
-                        child: Text("Set"),
-                      )
-                    ]),
-        )));
+        content: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                      child: Container(
+                    margin: const EdgeInsets.all(8.0),
+                    child: Column(
+                        children: hidden
+                            ? datas
+                                .map((e) => CustomTile(context, e, usr.uid))
+                                .toList()
+                            : [
+                                TextField(controller: _zipcontrol),
+                                TextButton(
+                                  onPressed: () async {
+                                    num temp = 0;
+                                    if (_zipcontrol.text.isNotEmpty &&
+                                        _zipcontrol.text.length < 6) {
+                                      temp = int.parse(_zipcontrol.text);
+                                    }
+                                    //update userzip
+                                    await FirebaseFirestore.instance
+                                        .collection("Users")
+                                        .doc(usr.uid)
+                                        .update({"defaultZip": temp}).then(
+                                            (k) => Navigator.of(context).pop());
+                                  },
+                                  child: Text("Set"),
+                                )
+                              ]),
+                  ))
+                ]),
+          ),
+        ));
   });
 }
 
