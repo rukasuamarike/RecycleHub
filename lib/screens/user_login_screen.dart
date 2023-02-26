@@ -52,7 +52,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                       name: _nameController.text,
                       totalCans: 0,
                       defaultCenter: "",
-                      defaultZip: 95053)
+                      defaultZip: 0)
                   .toJson()));
     }
   }

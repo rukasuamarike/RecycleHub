@@ -25,19 +25,25 @@ class _HomeState extends State<Home> {
     UserData? userData = Provider.of<UserData?>(context);
 
     void mapuri() async {
-      if (userData!.defaultZip == 0) {
+      print(userData!.defaultZip);
+      if (userData.defaultZip == 0) {
         showDialog(
             context: context,
-            builder: (BuildContext) => _SetZipDialog(context, userData));
+            builder: (context) => _SetZipDialog(context, userData));
       } else {
+        List<num> ziprange = [];
+        for (int i = 0; i < 5; i++) {
+          ziprange.add(userData.defaultZip + i);
+          ziprange.add(userData.defaultZip - i);
+        }
         await FirebaseFirestore.instance
             .collection("api")
-            .where("PostalCode", isEqualTo: userData.defaultZip)
+            .where("PostalCode", whereIn: ziprange)
             .get()
-            .then((snap) => snap.docs.map((e) => CRV.fromFirestore(e)))
+            .then((snap) => snap.docs.map((e) => CRV.fromFirestore(e)).toList())
             .then((crvs) => showDialog(
                 context: context,
-                builder: (BuildContext) => _CRVDialog(context, crvs)));
+                builder: (context) => _CRVDialog(context, crvs, userData)));
       }
     }
 
@@ -73,7 +79,8 @@ class _HomeState extends State<Home> {
 }
 
 Widget _SetZipDialog(BuildContext context, UserData uData) {
-  final zipController = TextEditingController(text: uData.name);
+  final zipController =
+      TextEditingController(text: uData.defaultZip.toString());
   return AlertDialog(
     title: Text("Set zipcode"),
     content: SafeArea(
@@ -91,16 +98,17 @@ Widget _SetZipDialog(BuildContext context, UserData uData) {
           ),
           TextButton(
             onPressed: () async {
-              UserData temp = uData;
+              num temp = 0;
               if (zipController.text.isNotEmpty &&
                   zipController.text.length < 6) {
-                temp.defaultZip = int.parse(zipController.text);
+                temp = int.parse(zipController.text);
               }
+              //update userzip
               await FirebaseFirestore.instance
                   .collection("Users")
                   .doc(uData.uid)
-                  .update(uData.toJson())
-                  .then((k) => Navigator.of(context).pop());
+                  .update({"defaultZip": temp}).then(
+                      (k) => Navigator.of(context).pop());
             },
             child: Text("Set"),
           ),
@@ -117,39 +125,43 @@ Widget _SetZipDialog(BuildContext context, UserData uData) {
   );
 }
 
-Widget _CRVDialog(BuildContext context, Iterable<CRV> datas) {
-  List<CRV> lv = datas.toList();
+Widget _CRVDialog(BuildContext context, List<CRV> datas, UserData usr) {
+  print(datas);
   return AlertDialog(
-    title: Text("Select shop"),
-    content: SafeArea(
-      child: ListView.builder(
-          itemCount: lv.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(lv[index].FacilityName),
-              subtitle: TextButton(
-                onPressed: () async {
-                  String query = Uri.encodeComponent(
-                      '${lv[index].StreetAddress}, ${lv[index].City},CA ');
-                  html.window.open(
-                      'https://www.google.com/maps/search/?api=1&query=centurylink+field?api=1&query=${query}',
-                      "bob");
-                },
-                child: Text('${lv[index].StreetAddress}, ${lv[index].City}'),
+      title: Text("Select Recycle Center"),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("Cancel")),
+      ],
+      content: Center(
+          child: Container(
+        margin: const EdgeInsets.all(8.0),
+        child: Column(
+          children: datas.map((e) => CustomTile(context, e, usr.uid)).toList(),
+        ),
+      )));
+}
 
-                ///
-                /// TODO: upload resume button
-                ///
-              ),
-            );
-          }),
+Widget CustomTile(BuildContext context, CRV c, String uid) {
+  return ListTile(
+    title: Text(c.FacilityName),
+    onTap: () async => await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(uid)
+        .update({
+      "defaultCenter": c.FacilityName,
+      "defaultZip": c.PostalCode
+    }).then((value) => Navigator.of(context).pop()),
+    subtitle: TextButton(
+      onPressed: () async {
+        String query = Uri.encodeComponent('${c.FacilityName} ${c.City}');
+        html.window.open(
+            'https://www.google.com/maps/search/?api=1&query=${query}', "bob");
+      },
+      child: Text('${c.StreetAddress}, ${c.City}'),
     ),
-    actions: [
-      TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text("Cancel")),
-    ],
   );
 }
