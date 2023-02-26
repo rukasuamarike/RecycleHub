@@ -25,10 +25,10 @@ class _LeaderboardState extends State<Leaderboard> {
     widgetlist.insertAll(
         1,
         Leaders.map((usr) => Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(children: [
                 Text(usr.name),
-                Spacer(),
+                const Spacer(),
                 Text(usr.totalCans.toString())
               ]),
             )));

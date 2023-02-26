@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
           decoration: const ShapeDecoration(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4))),
-              color: Colors.blue),
+              color: Colors.green),
           child: Text(title)),
     );
   }
@@ -53,10 +53,14 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Ctab(0, "Profile"),
+            SizedBox(width: MediaQuery.of(context).size.width / 10),
             Ctab(1, "Turn in Cans"),
+            SizedBox(width: MediaQuery.of(context).size.width / 10),
             Ctab(2, "Leaderboard")
           ],
         ),

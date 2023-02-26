@@ -69,16 +69,17 @@ class _ProfileState extends State<Profile> {
     return Center(
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.width / 16),
+          SizedBox(height: MediaQuery.of(context).size.width / 32),
           //need to get the user's name from firebase
           Text(userData!.name,
               style:
-                  const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  const TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
           SizedBox(height: MediaQuery.of(context).size.width / 32),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("My Default Recycling Center: "),
+              const Text("My Default Recycling Center: ",
+                  style: TextStyle(fontSize: 18)),
               TextButton(
                 onPressed: () async {
                   String query = Uri.encodeComponent(userData.defaultCenter);
@@ -86,26 +87,37 @@ class _ProfileState extends State<Profile> {
                       'https://www.google.com/maps/search/?api=1&query=${query}',
                       "bob");
                 },
-                child: Text(userData.defaultCenter.isEmpty
-                    ? "Not set yet"
-                    : userData.defaultCenter),
+                child: Text(
+                    userData.defaultCenter.isEmpty
+                        ? "Not set yet"
+                        : userData.defaultCenter,
+                    style: const TextStyle(fontSize: 18, color: Colors.green)),
               ),
             ],
           ),
+          SizedBox(height: MediaQuery.of(context).size.width / 64),
 
-          TextButton(
+          ElevatedButton(
             onPressed: () => mapuri(),
-            child: Text(userData.defaultCenter.isEmpty ? "Set" : "Update"),
+            style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)),
+            child: Text(
+                userData.defaultCenter.isEmpty
+                    ? "Set Default Recycling Center"
+                    : "Update Default Recycling Center",
+                style: const TextStyle(fontSize: 18)),
           ),
 
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
           //need to get the nubmer of cans from firebase
-          Text('Total Cans: ${userData.totalCans.toString()}'),
+          Text('Total Cans Recycled: ${userData.totalCans.toString()}',
+              style: const TextStyle(fontSize: 18)),
 
           SizedBox(height: MediaQuery.of(context).size.width / 32),
 
-          Text('Email: ${user!.providerData[0].email.toString()}')
+          Text('Email: ${user!.providerData[0].email.toString()}',
+              style: const TextStyle(fontSize: 18))
         ],
       ),
     );
@@ -181,12 +193,12 @@ Widget _CRVDialog(BuildContext context, List<CRV> datas, UserData usr) {
     return AlertDialog(
         title: Text("Select Recycle Center"),
         actions: [
-          TextButton(
+          ElevatedButton(
               onPressed: () => setState(() {
                     hidden = false;
                   }),
               child: const Text("Update Zipcode")),
-          TextButton(
+          ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
