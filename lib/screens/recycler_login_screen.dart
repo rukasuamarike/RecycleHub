@@ -45,24 +45,35 @@ class _RecyclerLoginState extends State<RecyclerLogin> {
     }
 
     return Scaffold(
-        body: SafeArea(
+        body: Center(
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width > 600
+                    ? 600
+                    : double.infinity,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Flexible(child: Container(), flex: 2),
-                      //add logo
-                      const SizedBox(height: 64),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 4,
+                      ),
+                      const Text(
+                        "Login as Recycling Center",
+                        style: TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.bold),
+                      ),
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 16,
+                      ),
                       //text field for email
                       TextFieldInput(
                           textEditingController: _emailController,
                           hintText: 'Enter your email',
                           textInputType: TextInputType.emailAddress),
                       //add space between the text fields
-                      const SizedBox(
-                        height: 24,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 32,
                       ),
                       //text field for pw
                       TextFieldInput(
@@ -72,7 +83,9 @@ class _RecyclerLoginState extends State<RecyclerLogin> {
                         isPass: true,
                       ),
 
-                      const SizedBox(height: 24),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 32,
+                      ),
                       //login button
                       InkWell(
                         onTap: () => loginCenter(),
