@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:recyclehub/screens/recycler_login_screen.dart';
 import 'package:recyclehub/screens/user_login_screen.dart';
 import 'package:recyclehub/screens/user_signup_screen.dart';
+import 'package:recyclehub/widgets/crv.dart';
 
 import '../widgets/userdata.dart';
 import 'home.dart';
@@ -58,7 +59,23 @@ class _SplashScreenState extends State<SplashScreen> {
               name: "",
               totalCans: 0,
               defaultCenter: "",
-              defaultZip: 0))
+              defaultZip: 0)),
+      StreamProvider.value(
+          value: FirebaseFirestore.instance
+              .collection("Users")
+              .orderBy("totalCans", descending: true)
+              .limit(50)
+              .snapshots()
+              .map((snap) =>
+                  snap.docs.map((doc) => UserData.fromFirestore(doc)).toList()),
+          initialData: [
+            UserData(
+                uid: "uid",
+                name: "name",
+                totalCans: 0,
+                defaultCenter: "defaultCenter",
+                defaultZip: 0)
+          ])
     ], child: Home());
   }
 }

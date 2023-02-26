@@ -8,7 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+import 'package:recyclehub/screens/leaderboard.dart';
 import 'package:recyclehub/screens/profile.dart';
+import 'package:recyclehub/screens/turn_cans.dart';
 import 'package:recyclehub/widgets/userdata.dart';
 import '../widgets/crv.dart';
 
@@ -21,7 +23,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _page = 0;
-  static List<Widget> _views = [Profile()];
+  static List<Widget> _views = [Profile(), TurnCans(), Leaderboard()];
   static const List<Widget> tabs = [];
 
   @override
@@ -29,9 +31,9 @@ class _HomeState extends State<Home> {
     setState(() => _page = index);
   }
 
-  Widget Ctab(pagenum, title, Function() onpress) {
+  Widget Ctab(pagenum, title) {
     return InkWell(
-      onTap: () => setState(() => {_page = pagenum, onpress}),
+      onTap: () => setState(() async => _page = pagenum),
       child: Container(
           width: MediaQuery.of(context).size.width / 5,
           alignment: Alignment.center,
@@ -53,9 +55,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Row(
           children: [
-            Ctab(0, "Profile", () => print(userData!.name)),
-            Ctab(1, "Turn in Cans", () => print(userData!.totalCans)),
-            Ctab(2, "Leaderboard", () => print("async get function here"))
+            Ctab(0, "Profile"),
+            Ctab(1, "Turn in Cans"),
+            Ctab(2, "Leaderboard")
           ],
         ),
       ),
