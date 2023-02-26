@@ -74,15 +74,25 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                           children: [
                             //add logo
                             SizedBox(
-                                height: MediaQuery.of(context).size.height / 3),
+                                height: MediaQuery.of(context).size.height / 4),
+
+                            const Text(
+                              "Login to ReHub",
+                              style: TextStyle(
+                                  fontSize: 40, fontWeight: FontWeight.bold),
+                            ),
+
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
+                            ),
                             //text field for email
                             TextFieldInput(
                                 textEditingController: _emailController,
                                 hintText: 'Enter your email',
                                 textInputType: TextInputType.emailAddress),
                             //add space between the text fields
-                            const SizedBox(
-                              height: 24,
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
                             ),
                             //text field for pw
                             TextFieldInput(
@@ -92,7 +102,9 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                               isPass: true,
                             ),
 
-                            const SizedBox(height: 24),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
+                            ),
                             //login button
                             InkWell(
                               onTap: () async =>
@@ -151,19 +163,31 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 4,
                             ),
+                            const Text(
+                              "Sign up for ReHub",
+                              style: TextStyle(
+                                  fontSize: 40, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
+                            ),
                             TextFieldInput(
                                 textEditingController: _nameController,
                                 hintText: 'Enter your name',
                                 textInputType: TextInputType.name),
                             //for spacing
-                            const SizedBox(height: 24),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
+                            ),
                             //text field for email
                             TextFieldInput(
                                 textEditingController: _emailController,
                                 hintText: 'Enter your email',
                                 textInputType: TextInputType.emailAddress),
                             //add space between the text fields
-                            const SizedBox(height: 24),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
+                            ),
                             //text field for pw
                             TextFieldInput(
                               textEditingController: _passwordController,
@@ -171,7 +195,9 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                               textInputType: TextInputType.text,
                               isPass: true,
                             ),
-                            const SizedBox(height: 12),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 32,
+                            ),
 
                             //sign up button
                             InkWell(
