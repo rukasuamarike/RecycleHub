@@ -84,7 +84,7 @@ class _RecyclerLoginState extends State<RecyclerLogin> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4))),
-                                color: Colors.blue),
+                                color: Colors.green),
                             child: const Text('Log in as a Recycling Center')),
                       ),
                       const SizedBox(height: 12),

@@ -54,14 +54,11 @@ class _TurnCansState extends State<TurnCans> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: MediaQuery.of(context).size.width / 16),
+                      SizedBox(height: MediaQuery.of(context).size.width / 32),
                       const Text("Turn in Cans",
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold)),
-                      SizedBox(height: MediaQuery.of(context).size.width / 32),
-
-                      Flexible(child: Container(), flex: 2),
-                      const SizedBox(height: 64),
+                              fontSize: 40, fontWeight: FontWeight.bold)),
+                      SizedBox(height: MediaQuery.of(context).size.width / 9),
                       //text field for email
                       TextFieldInput(
                           textEditingController: _emailController,
@@ -86,13 +83,16 @@ class _TurnCansState extends State<TurnCans> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4))),
-                                color: Colors.blue),
+                                color: Colors.green),
                             child: _isLoading
                                 ? const Center(
                                     child: CircularProgressIndicator(
                                         color: Colors.white),
                                   )
-                                : const Text('Proceed')),
+                                : const Text(
+                                    'Proceed',
+                                    style: TextStyle(color: Colors.black),
+                                  )),
                       ),
                       const SizedBox(height: 12),
                       Flexible(child: Container(), flex: 2),

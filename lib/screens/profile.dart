@@ -73,8 +73,8 @@ class _ProfileState extends State<Profile> {
           //need to get the user's name from firebase
           Text(userData!.name,
               style:
-                  const TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
-          SizedBox(height: MediaQuery.of(context).size.width / 32),
+                  const TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+          SizedBox(height: MediaQuery.of(context).size.width / 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

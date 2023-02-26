@@ -106,7 +106,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4))),
-                                      color: Colors.blue),
+                                      color: Colors.green),
                                   child: _isLoading
                                       ? const Center(
                                           child: CircularProgressIndicator(
@@ -186,7 +186,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(4))),
-                                      color: Colors.blue),
+                                      color: Colors.green),
                                   child: _isLoading
                                       ? const Center(
                                           child: CircularProgressIndicator(

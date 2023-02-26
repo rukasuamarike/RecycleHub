@@ -31,18 +31,31 @@ class _SplashScreenState extends State<SplashScreen> {
           body: Center(
         child: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.width / 4),
+            SizedBox(height: MediaQuery.of(context).size.height / 4),
 
+            const Text(
+              "ReHub",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 8,
+            ),
             //button to login as a recycling center
             ElevatedButton(
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => RecyclerLogin())),
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.green)),
                 child: const Text("Login as a Recycling Center")),
             const SizedBox(height: 48),
 
             ElevatedButton(
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => UserLoginScreen())),
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll<Color>(Colors.green)),
                 child: const Text("Sign Up or Login as a User"))
           ],
         ),

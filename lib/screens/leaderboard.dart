@@ -19,11 +19,11 @@ class _LeaderboardState extends State<Leaderboard> {
     List<UserData> Leaders = Provider.of<List<UserData>>(context);
     print(Leaders);
     List<Widget> widgetlist = [];
-    widgetlist.add(Padding(
-        padding: EdgeInsets.all(10),
+    widgetlist.add(const Padding(
+        padding: EdgeInsets.all(45),
         child: Text(
           "Leaderboard",
-          style: TextStyle(fontSize: 30),
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
         )));
     widgetlist.add(
       SizedBox(
@@ -93,8 +93,9 @@ class _LeaderboardState extends State<Leaderboard> {
     //             const Spacer(),
     //           ]),
     //         ))));
-    return Scaffold(
-        body: SingleChildScrollView(
+    return SafeArea(
+        child: Scaffold(
+            body: SingleChildScrollView(
       child: ConstrainedBox(
         constraints:
             BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
@@ -102,6 +103,6 @@ class _LeaderboardState extends State<Leaderboard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: widgetlist),
       ),
-    ));
+    )));
   }
 }
