@@ -23,7 +23,6 @@ class _HomeState extends State<Home> {
   int _page = 0;
   static List<Widget> _views = [Profile()];
   static const List<Widget> tabs = [];
-  late TabController _controller;
 
   @override
   void _onItemTapped(int index) {
@@ -34,7 +33,7 @@ class _HomeState extends State<Home> {
     return InkWell(
       onTap: () => setState(() => {_page = pagenum, onpress}),
       child: Container(
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width / 5,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: const ShapeDecoration(
@@ -56,7 +55,7 @@ class _HomeState extends State<Home> {
           children: [
             Ctab(0, "Profile", () => print(userData!.name)),
             Ctab(1, "Turn in Cans", () => print(userData!.totalCans)),
-            Ctab(0, "Leaderboard", () => print("async get function here"))
+            Ctab(2, "Leaderboard", () => print("async get function here"))
           ],
         ),
       ),
