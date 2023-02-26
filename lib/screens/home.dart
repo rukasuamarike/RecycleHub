@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
 
   Widget Ctab(pagenum, title) {
     return InkWell(
-      onTap: () => setState(() async => _page = pagenum),
+      onTap: () => setState(() => _page = pagenum),
       child: Container(
           width: MediaQuery.of(context).size.width / 5,
           alignment: Alignment.center,

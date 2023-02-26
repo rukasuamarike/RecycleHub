@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -18,6 +20,30 @@ class _RecyclerLoginState extends State<RecyclerLogin> {
 
   @override
   Widget build(BuildContext context) {
+    bool auth = false;
+    void loginCenter() async {
+      await FirebaseFirestore.instance
+          .collection("Centers")
+          .where("authEmail", isEqualTo: _emailController.text)
+          .get()
+          .then((doc) {
+        print(doc.docs.map((e) {
+          Map<String, dynamic> data = e.data() as Map<String, dynamic>;
+          if (data["authEmail"] == "()") {
+            print("snackbar that says ur not center user");
+          } else {
+            auth = true;
+          }
+        }));
+      });
+      if (auth) {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => TurnCans()));
+      }
+    }
+
     return Scaffold(
         body: SafeArea(
             child: Container(
@@ -49,10 +75,7 @@ class _RecyclerLoginState extends State<RecyclerLogin> {
                       const SizedBox(height: 24),
                       //login button
                       InkWell(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TurnCans())),
+                        onTap: () => loginCenter(),
                         child: Container(
                             width: double.infinity,
                             alignment: Alignment.center,

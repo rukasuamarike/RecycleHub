@@ -50,7 +50,7 @@ class _TurnCansState extends State<TurnCans> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: MediaQuery.of(context).size.width / 16),
-                      const Text("Adding Trash Cans",
+                      const Text("Turn in Cans",
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold)),
                       SizedBox(height: MediaQuery.of(context).size.width / 32),
